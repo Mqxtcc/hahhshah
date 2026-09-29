@@ -1,0 +1,13 @@
+[
+{"guild_id":"1499782093352337471","enabled":false,"channel_id":null,"message":null,"updated_at":"2026-08-26 14:01:34.804118","leave_message":null,"welcome_image":null,"leave_image":null},
+{"guild_id":"1450255566269059207","enabled":false,"channel_id":null,"message":null,"updated_at":"2026-08-26 14:13:53.294629","leave_message":null,"welcome_image":null,"leave_image":null},
+{"guild_id":"1535030348763889884","enabled":false,"channel_id":null,"message":null,"updated_at":"2026-08-28 12:42:07.483302","leave_message":null,"welcome_image":null,"leave_image":null},
+{"guild_id":"1366006249434644570","enabled":true,"channel_id":"1366006598379634830","message":"**{isim}** sunucumuza hoşgeldin! seninle beraber **{n}** kişi olduk.","updated_at":"2026-08-29 17:05:42.359","leave_message":"Güle güle, **{isim}** senin eksikliğin ile **{n}** üyeye düştük.","welcome_image":null,"leave_image":null},
+{"guild_id":"1543207961856573573","enabled":false,"channel_id":null,"message":null,"updated_at":"2026-08-30 16:54:25.861201","leave_message":null,"welcome_image":null,"leave_image":null},
+{"guild_id":"1535605692797419571","enabled":false,"channel_id":null,"message":null,"updated_at":"2026-08-31 19:51:45.858549","leave_message":null,"welcome_image":null,"leave_image":null},
+{"guild_id":"1514669017896321054","enabled":false,"channel_id":null,"message":null,"updated_at":"2026-09-02 15:49:47.517888","leave_message":null,"welcome_image":null,"leave_image":null},
+{"guild_id":"1537880767521357844","enabled":false,"channel_id":null,"message":null,"updated_at":"2026-09-04 18:50:21.422317","leave_message":null,"welcome_image":null,"leave_image":null},
+{"guild_id":"1537946265067716688","enabled":true,"channel_id":"1537946265893994547","message":"**Sunucumuza hoşgeldin** {kullanici}, seninle beraber toplamda **{n}** kişi olduk. umarız ki keyifli vakit geçirirsin!","updated_at":"2026-09-12 19:20:59.232","leave_message":"**Güle güle**, {kullanici} senin eksikliğin ile **{n}** üyeye düştük.","welcome_image":null,"leave_image":null},
+{"guild_id":"1248347497592655913","enabled":true,"channel_id":"1257492588081053717","message":"Sunucumuza hoşgeldin **{isim}**, seninle beraber toplamda **{n}** kişi olduk!","updated_at":"2026-09-12 19:26:19.854","leave_message":"Görüşürüz **{isim}**, senin ayrılmanla birlikle **{n}** kişiye düştük.","welcome_image":null,"leave_image":null},
+{"guild_id":"1544311452486209546","enabled":false,"channel_id":"1548307135018958938","message":null,"updated_at":"2026-09-17 20:04:44.246","leave_message":null,"welcome_image":null,"leave_image":null}
+]

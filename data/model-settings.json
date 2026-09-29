@@ -1,0 +1,5 @@
+{
+  "groq": "openai/gpt-oss-120b",
+  "openrouter": "pixrouter:openrouter/pareto-code",
+  "gemini": "gemini-3.5-flash-lite"
+}

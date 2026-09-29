@@ -1,0 +1,29 @@
+{
+  "complete": true,
+  "dumpedAt": "2026-09-19T09:11:16.235Z",
+  "source": "neon",
+  "schema": "public",
+  "tables": {
+    "discord_afk": 0,
+    "discord_automod_config": 14,
+    "discord_automod_strikes": 70,
+    "discord_blocked_users": 0,
+    "discord_bot_settings": 340,
+    "discord_command_trials": 14,
+    "discord_conversations": 0,
+    "discord_custom_commands": 3,
+    "discord_guard_config": 4,
+    "discord_guard_violation_trackers": 0,
+    "discord_half_owners": 2,
+    "discord_learned_rules": 2,
+    "discord_premium_users": 6,
+    "discord_quiz_scores": 0,
+    "discord_user_permissions": 8,
+    "discord_vip_users": 7,
+    "discord_warnings": 11,
+    "discord_welcome_config": 11,
+    "discord_wordchain_channels": 3,
+    "discord_wordchain_scores": 24,
+    "discord_wordchain_used_words": 949
+  }
+}

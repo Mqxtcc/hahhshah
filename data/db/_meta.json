@@ -1,0 +1,97 @@
+{
+  "neonImport": {
+    "completedAt": "2026-09-19T09:11:16.270Z",
+    "source": "neon",
+    "tables": {
+      "discord_afk": {
+        "inserted": 0,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_automod_config": {
+        "inserted": 14,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_automod_strikes": {
+        "inserted": 70,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_bot_settings": {
+        "inserted": 340,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_command_trials": {
+        "inserted": 14,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_custom_commands": {
+        "inserted": 3,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_half_owners": {
+        "inserted": 2,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_premium_users": {
+        "inserted": 6,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_quiz_scores": {
+        "inserted": 0,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_user_permissions": {
+        "inserted": 8,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_vip_users": {
+        "inserted": 7,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_warnings": {
+        "inserted": 11,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_welcome_config": {
+        "inserted": 11,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_wordchain_channels": {
+        "inserted": 3,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_wordchain_scores": {
+        "inserted": 24,
+        "skipped": 0,
+        "invalid": 0
+      },
+      "discord_wordchain_used_words": {
+        "inserted": 949,
+        "skipped": 0,
+        "invalid": 0
+      }
+    },
+    "unknownTables": [
+      "discord_blocked_users",
+      "discord_conversations",
+      "discord_guard_config",
+      "discord_guard_violation_trackers",
+      "discord_learned_rules"
+    ]
+  },
+  "sqliteMigrated": true,
+  "welcomebackMigrated": true
+}
