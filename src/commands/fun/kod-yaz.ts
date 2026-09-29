@@ -210,7 +210,7 @@ const command: Command = {
     const attachment = message.attachments.first();
     if (attachment) {
       if (attachment.size > MAX_ATTACHMENT_BYTES) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Ekli dosya çok büyük (maks ~${Math.floor(MAX_ATTACHMENT_BYTES / 1000)}KB).` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Ekli dosya çok büyük (maks ~${Math.floor(MAX_ATTACHMENT_BYTES / 1000)}KB).` })] });
       }
       try {
         const text = (await fetchAttachmentText(attachment.url)).trim();
@@ -219,7 +219,7 @@ const command: Command = {
           usedAttachment = true;
         }
       } catch (err) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Ekli dosya okunamadı: ${err instanceof Error ? err.message : "tekrar dene."}` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Ekli dosya okunamadı: ${err instanceof Error ? err.message : "tekrar dene."}` })] });
       }
     }
 
@@ -227,7 +227,7 @@ const command: Command = {
     let info = langKey && !isAuto ? LANG_MAP[langKey] : undefined;
 
     if (!langKey || !featureText || (!isAuto && !info)) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [usageEmbed(
         `${EMOJIS.usage} Kullanım: \`${prefix}kod-yaz <dil> <istenilen özellikler>\`\n` +
         "Desteklenen diller: `py` (Python), `js` (JavaScript), `ts` (TypeScript), `cpp`/`c++` (C++), `c` (C), " +
@@ -255,13 +255,13 @@ const command: Command = {
         const detectedKey = await detectAutoLangKey(featureText);
         info = LANG_MAP[detectedKey] ?? LANG_MAP[AUTO_FALLBACK_LANG_KEY];
         if (!info) {
-          return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dil otomatik seçilirken bir sorun oluştu, tekrar dene ya da dili elle belirt.` })] });
+          return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dil otomatik seçilirken bir sorun oluştu, tekrar dene ya da dili elle belirt.` })] });
         }
         await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.loading} Dil olarak **${info.label}** seçildi, kod üretiliyor${usedAttachment ? " (ekli dosyadan okunan istek)" : ""}...`) });
       }
 
       if (!info) {
-        return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dil belirlenemedi, tekrar dene.` })] });
+        return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dil belirlenemedi, tekrar dene.` })] });
       }
 
       const { text: rawText, retried, model } = await generateCodeText(
@@ -276,7 +276,7 @@ const command: Command = {
       );
 
       if (files.length === 0 || files.every((f) => f.code.length < 5)) {
-        return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Geçerli bir kod üretemedi, tekrar dene.` })] });
+        return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Geçerli bir kod üretemedi, tekrar dene.` })] });
       }
 
       // ✅ AI başarılı sonuç üretti → deneme hakkını şimdi harca.
@@ -345,11 +345,11 @@ const command: Command = {
         });
       }
 
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
       components: [embed, ...fileComponents(attachments)], files: attachments });
     } catch (err: unknown) {
       console.error("kod-yaz patladı la:", err);
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
     }
   },
 };

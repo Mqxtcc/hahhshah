@@ -39,17 +39,17 @@ const command: Command = {
   async execute(message: Message, args: string[]) {
     const target: User | undefined = message.mentions.users.first();
     if (!target) {
-      return message.reply({
+      return await message.reply({
         flags: MessageFlags.IsComponentsV2,
         components: [errorEmbed("Hatalı Kullanım", `Kimi ölçeceğim? Kullanım: \`${command.usage}\``)],
       });
     }
     if (target.bot) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [errorEmbed("Olmaz", "Botlarla aşk yaşanmaz, üzgünüm 🤖💔")] });
     }
     if (target.id === message.author.id) {
-      return message.reply({
+      return await message.reply({
         flags: MessageFlags.IsComponentsV2,
         components: [
           infoEmbed(
@@ -60,7 +60,7 @@ const command: Command = {
       });
     }
     const p = lovePercent(message.author.id, target.id);
-    return message.reply({
+    return await message.reply({
       flags: MessageFlags.IsComponentsV2,
       components: [
         infoEmbed(

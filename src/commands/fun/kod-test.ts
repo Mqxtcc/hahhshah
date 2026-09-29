@@ -76,7 +76,7 @@ const command: Command = {
     const attachment = message.attachments.first();
     if (attachment) {
       if (attachment.size > MAX_ATTACHMENT_BYTES) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dosya çok büyük (maks ~${Math.floor(MAX_ATTACHMENT_BYTES / 1000)}KB).` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dosya çok büyük (maks ~${Math.floor(MAX_ATTACHMENT_BYTES / 1000)}KB).` })] });
       }
       try {
         code = await fetchAttachmentText(attachment.url);
@@ -86,12 +86,12 @@ const command: Command = {
         const extMatch = /\.([a-z0-9]+)$/i.exec(attachment.name ?? "");
         if (extMatch) attachExt = extMatch[1].toLowerCase();
       } catch (err) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Ekli dosya okunamadı: ${err instanceof Error ? err.message : "tekrar dene."}` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Ekli dosya okunamadı: ${err instanceof Error ? err.message : "tekrar dene."}` })] });
       }
     }
 
     if (!code || code.length < 5) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [usageEmbed(
         `${EMOJIS.usage} Kullanım: \`${prefix}kod-test <kod> [framework]\` (mesaja kod bloğu yaz ya da bir dosya ekle)\n` +
         "Örnek: bir kod bloğu içine kodunu yapıştır, isteğe bağlı framework belirt (örn: jest, pytest).",
@@ -117,7 +117,7 @@ const command: Command = {
       const { code: testCode, scenarios, truncated: outputTruncated } = extractTestCode(rawText);
 
       if (!testCode || testCode.length < 5) {
-        return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Geçerli bir test üretilemedi, tekrar dene.` })] });
+        return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Geçerli bir test üretilemedi, tekrar dene.` })] });
       }
 
       // ✅ AI başarılı sonuç üretti → deneme hakkını şimdi harca.
@@ -149,11 +149,11 @@ const command: Command = {
         .setFooter({ text: `İsteyen: ${message.author.tag}` })
         .setTimestamp();
 
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
       components: [embed, fileComponent(fileAttachment.name ?? filename)], files: [fileAttachment] });
     } catch (err: unknown) {
       console.error("kod-test patladı la:", err);
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
     }
   },
 };

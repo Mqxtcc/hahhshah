@@ -53,18 +53,18 @@ const command: Command = {
 
     if (sub === "izin") {
       if (message.author.id !== OWNER_ID) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu komutu sadece bot sahibi kullanabilir.` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu komutu sadece bot sahibi kullanabilir.` })] });
       }
       const toggle = args[1]?.toLowerCase();
       if (toggle === "ac" || toggle === "aç" || toggle === "on") {
         setOwnerBypass(true);
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.success} Muafiyet açıldı — artık Kelime Zinciri kanalına normal mesaj atabilirsin, oyuna dahil olmazsın.`) });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.success} Muafiyet açıldı — artık Kelime Zinciri kanalına normal mesaj atabilirsin, oyuna dahil olmazsın.`) });
       }
       if (toggle === "kapat" || toggle === "off") {
         setOwnerBypass(false);
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.success} Muafiyet kapatıldı — artık sen de herkes gibi oyuna dahilsin.`) });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.success} Muafiyet kapatıldı — artık sen de herkes gibi oyuna dahilsin.`) });
       }
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [usageEmbed(
         `${EMOJIS.usage} Kullanım: \`${prefix}kelime izin aç\` veya \`${prefix}kelime izin kapat\`\n` +
           `Şu an: **${isOwnerBypassEnabled() ? "açık" : "kapalı"}**`,
@@ -73,24 +73,24 @@ const command: Command = {
 
     if (sub === "kanal" || sub === "kanal-ayarla" || sub === "setup" || sub === "baslat" || sub === "başlat") {
       if (!isAdmin(message)) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu komutu sadece **Yönetici** kullanabilir.` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu komutu sadece **Yönetici** kullanabilir.` })] });
       }
 
       const targetChannel = message.mentions.channels.first() ?? message.channel;
       if (targetChannel.type !== ChannelType.GuildText) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Sadece bir metin kanalını Kelime Zinciri kanalı yapabilirsin.` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Sadece bir metin kanalını Kelime Zinciri kanalı yapabilirsin.` })] });
       }
 
       const me = message.guild.members.me;
       const perms = me ? targetChannel.permissionsFor(me) : null;
       if (!perms?.has(PermissionFlagsBits.SendMessages) || !perms.has(PermissionFlagsBits.ManageMessages)) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} <#${targetChannel.id}> kanalında **Mesaj Gönder** ve **Mesajları Yönet** iznine ihtiyacım var.` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} <#${targetChannel.id}> kanalında **Mesaj Gönder** ve **Mesajları Yönet** iznine ihtiyacım var.` })] });
       }
 
       const existingChannelId = getConfiguredChannelId(message.guild.id);
       const result = await setWordChainChannel(message.guild.id, targetChannel.id, message.author.id);
       if (!result.ok) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} <#${targetChannel.id}> zaten bu sunucunun Kelime Zinciri kanalı.`) });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} <#${targetChannel.id}> zaten bu sunucunun Kelime Zinciri kanalı.`) });
       }
 
       const embed = rulesEmbed(prefix, targetChannel.id);
@@ -101,24 +101,24 @@ const command: Command = {
       const note = existingChannelId && existingChannelId !== targetChannel.id
         ? ` Eski kanal (<#${existingChannelId}>) artık devre dışı; sunucu rekoru korundu.`
         : "";
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.success} <#${targetChannel.id}> artık kalıcı Kelime Zinciri kanalı.${note}`) });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.success} <#${targetChannel.id}> artık kalıcı Kelime Zinciri kanalı.${note}`) });
     }
 
     if (sub === "kaldir" || sub === "durdur" || sub === "kapat" || sub === "stop") {
       if (!isAdmin(message)) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu komutu sadece **Yönetici** kullanabilir.` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu komutu sadece **Yönetici** kullanabilir.` })] });
       }
       const removedChannelId = await removeWordChainChannel(message.guild.id);
       if (!removedChannelId) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu sunucuda kurulu bir Kelime Zinciri kanalı yok.` })] });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu sunucuda kurulu bir Kelime Zinciri kanalı yok.` })] });
       }
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`🏁 Kelime Zinciri kaldırıldı. <#${removedChannelId}> artık normal bir kanal.`) });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`🏁 Kelime Zinciri kaldırıldı. <#${removedChannelId}> artık normal bir kanal.`) });
     }
 
     if (sub === "durum" || sub === "status") {
       const status = getStatus(message.guild.id);
       if (!status) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} Bu sunucuda henüz bir Kelime Zinciri kanalı yok — \`${prefix}kelime kanal #kanal\` ile kur.`) });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} Bu sunucuda henüz bir Kelime Zinciri kanalı yok — \`${prefix}kelime kanal #kanal\` ile kur.`) });
       }
       const embed = new V2CardBuilder()
         .setColor(COLORS.success)
@@ -131,14 +131,14 @@ const command: Command = {
           { name: "Gereken harf", value: status.requiredLetter ? `**${status.requiredLetter}**` : "herhangi biri", inline: true },
           { name: "Kullanılan kelime sayısı", value: `${status.usedWordsCount}`, inline: true },
         );
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [embed] });
     }
 
     if (sub === "skor" || sub === "en-iyi" || sub === "best") {
       const scores = await getGuildWordScores(message.guild.id, 10);
       if (scores.length === 0) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} Henüz kabul edilmiş bir kelime yok; ilk kelimeni oynayarak skorunu oluşturabilirsin.`) });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} Henüz kabul edilmiş bir kelime yok; ilk kelimeni oynayarak skorunu oluşturabilirsin.`) });
       }
       const medals = ["🥇", "🥈", "🥉"];
       const lines = scores.map((entry, i) => {
@@ -155,14 +155,14 @@ const command: Command = {
         .setDescription(lines.join("\n"))
         .setFooter({ text: footer })
         .setTimestamp();
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [embed] });
     }
 
     if (sub === "top" || sub === "toplist" || sub === "leaderboard") {
       const top = getTopStreaks(10);
       if (top.length === 0) {
-        return message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} Henüz hiçbir sunucuda bir Kelime Zinciri rekoru yok.`) });
+        return await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.info} Henüz hiçbir sunucuda bir Kelime Zinciri rekoru yok.`) });
       }
 
       const medals = ["🥇", "🥈", "🥉"];
@@ -180,11 +180,11 @@ const command: Command = {
         .setFooter({ text: "Kelime Zinciri • Tüm Sunucular" })
         .setTimestamp();
 
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [embed] });
     }
 
-    return message.reply({ flags: MessageFlags.IsComponentsV2,
+    return await message.reply({ flags: MessageFlags.IsComponentsV2,
     components: [usageEmbed(
       `${EMOJIS.usage} Kullanım:\n` +
         `\`${prefix}kelime kanal [#kanal]\` — bu kanalı (veya belirtilen kanalı) kalıcı Kelime Zinciri kanalı yap\n` +

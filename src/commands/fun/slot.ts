@@ -35,7 +35,7 @@ const command: Command = {
   async execute(message: Message) {
     const reels = spinReels();
     const { text } = spinResult(reels);
-    return message.reply({
+    return await message.reply({
       flags: MessageFlags.IsComponentsV2,
       components: [
         infoEmbed(

@@ -47,7 +47,7 @@ const command: Command = {
       .setFooter({ text: `İsteyen: ${message.author.tag}` })
       .setTimestamp();
 
-    return message.reply({ flags: MessageFlags.IsComponentsV2,
+    return await message.reply({ flags: MessageFlags.IsComponentsV2,
     components: [embed] });
   },
 };

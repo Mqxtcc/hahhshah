@@ -49,7 +49,7 @@ const command: Command = {
     }
 
     if (!targetLang || !text) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [usageEmbed(
         `${EMOJIS.usage} Kullanım: \`${prefix}ceviri <hedef dil> <metin>\`\n` +
         `Örnek: \`${prefix}ceviri ingilizce merhaba nasılsın\`\n` +
@@ -58,7 +58,7 @@ const command: Command = {
     }
 
     if (text.length > MAX_INPUT_CHARS) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Metin çok uzun (maks ${MAX_INPUT_CHARS} karakter).` })] });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Metin çok uzun (maks ${MAX_INPUT_CHARS} karakter).` })] });
     }
 
     const loadingMsg = await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.loading} ${targetLang} diline çevriliyor...`) });
@@ -68,7 +68,7 @@ const command: Command = {
       const trimmed = translated.trim().slice(0, 4000);
 
       if (!trimmed) {
-        return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Gemini bir çeviri üretemedi, tekrar dene.` })] });
+        return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Gemini bir çeviri üretemedi, tekrar dene.` })] });
       }
 
       // ✅ AI başarılı sonuç üretti → deneme hakkını şimdi harca.
@@ -81,11 +81,11 @@ const command: Command = {
         .setFooter({ text: `İsteyen: ${message.author.tag}` })
         .setTimestamp();
 
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
       components: [embed] });
     } catch (err: unknown) {
       console.error("çeviri patladı la:", err);
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
     }
   },
 };

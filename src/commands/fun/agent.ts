@@ -159,7 +159,7 @@ const command: Command = {
     const userId = message.author.id;
 
     if (activeUsers.has(userId)) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Zaten çalışan bir \`agent\` görevin var, onun bitmesini bekle.` })] });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Zaten çalışan bir \`agent\` görevin var, onun bitmesini bekle.` })] });
     }
 
     // 🛠️ BUG FIX: bu komut zaten yukarıda isBotOwner() ile sadece bot sahibine
@@ -175,7 +175,7 @@ const command: Command = {
     const inputAttachments = collectInputAttachments(message);
 
     if (!istek && inputAttachments.length === 0) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [usageEmbed(
         `${EMOJIS.usage} Kullanım: \`${prefix}agent <istek>\`\n` +
           `Örnek: \`${prefix}agent Türkiye'deki en iyi 5 tatil beldesini karşılaştır ve kısa bir tablo çıkar\`\n` +
@@ -189,11 +189,11 @@ const command: Command = {
       istek || "Ekteki dosyayı/dosyaları incele ve önemli noktaları özetle.";
 
     if (istek.length > MAX_INPUT_CHARS) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} İstek çok uzun (maks ${MAX_INPUT_CHARS} karakter).` })] });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} İstek çok uzun (maks ${MAX_INPUT_CHARS} karakter).` })] });
     }
 
     if (message.attachments.size > MAX_INPUT_ATTACHMENTS) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} En fazla ${MAX_INPUT_ATTACHMENTS} dosya eklenebilir, ilk ${MAX_INPUT_ATTACHMENTS} tanesi kullanılacak şekilde devam ediliyor.` })] }).catch(() => null);
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} En fazla ${MAX_INPUT_ATTACHMENTS} dosya eklenebilir, ilk ${MAX_INPUT_ATTACHMENTS} tanesi kullanılacak şekilde devam ediliyor.` })] }).catch(() => null);
     }
     if (message.attachments.size > 0 && inputAttachments.length === 0) {
       // Tüm ekler boyut/protokol nedeniyle elendi — kullanıcıyı bilgilendir
