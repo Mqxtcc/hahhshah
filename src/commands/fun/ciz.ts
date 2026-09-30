@@ -43,7 +43,7 @@ const command: Command = {
     const request = args.join(" ").trim();
 
     if (!request) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [usageEmbed(
         `${EMOJIS.usage} Kullanım: \`${prefix}çiz <istek>\`\n` +
           `Örnek: \`${prefix}çiz gün batımında dağ manzarası\``,
@@ -51,7 +51,7 @@ const command: Command = {
     }
 
     if (request.length > CLOUDFLARE_MAX_PROMPT_CHARS) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} İstek çok uzun (maks ${CLOUDFLARE_MAX_PROMPT_CHARS} karakter).` })] });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} İstek çok uzun (maks ${CLOUDFLARE_MAX_PROMPT_CHARS} karakter).` })] });
     }
 
     // Görsel üretimi maliyetli (Groq zenginleştirme + FLUX/PixRouter):
@@ -104,7 +104,7 @@ const command: Command = {
       console.error("çiz patladı la:", err);
       const errorContent = `${EMOJIS.error} Görsel çizilemedi:\n${err instanceof Error ? err.message : String(err)}`.slice(0, 1_900);
       if (loadingMsg) {
-        return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: textCard(errorContent) }).catch(() => null);
+        return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: textCard(errorContent) }).catch(() => null);
       }
       return message
         .reply({

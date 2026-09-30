@@ -124,7 +124,7 @@ const command: Command = {
     if (!message.guild || !message.channel.isSendable()) return;
 
     if (activeChannels.has(message.channel.id)) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu kanalda zaten devam eden bir yarışma var, önce onun bitmesini bekle.` })] });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Bu kanalda zaten devam eden bir yarışma var, önce onun bitmesini bekle.` })] });
     }
 
     if (!(await requirePremiumOrTrial(message, "bilgiyarismasi"))) return;
@@ -160,7 +160,7 @@ const command: Command = {
       const quizMsg = await (loadingMsg
         ? loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
         components: [questionEmbed(q, secondsLeft, false), ...buildButtons(false)] })
-        : message.channel.send({ flags: MessageFlags.IsComponentsV2,
+        : await message.channel.send({ flags: MessageFlags.IsComponentsV2,
         components: [questionEmbed(q, secondsLeft, false), ...buildButtons(false)] }));
 
       const answeredUsers = new Set<string>();

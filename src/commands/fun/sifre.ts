@@ -61,7 +61,7 @@ const command: Command = {
     if (args[0]?.toLocaleLowerCase("tr-TR") === "kelime") {
       await ensurePremiumLoaded().catch(() => null);
       if (!isPremium(message.author.id)) {
-        return message.reply({
+        return await message.reply({
           flags: MessageFlags.IsComponentsV2,
           components: [errorEmbed("⭐ Premium Gerekli", "Kelime şifre modu premium üyelere özel.\nNasıl alınır? `!premiumbilgi` yaz.")],
         });
@@ -73,7 +73,7 @@ const command: Command = {
     if (args[0]) {
       const parsed = Number.parseInt(args[0], 10);
       if (!Number.isFinite(parsed) || parsed < MIN_LENGTH || parsed > MAX_LENGTH) {
-        return message.reply({
+        return await message.reply({
           flags: MessageFlags.IsComponentsV2,
           components: [errorEmbed("Hatalı Uzunluk", `Uzunluk ${MIN_LENGTH} ile ${MAX_LENGTH} arasında olmalı.`)]
         });
@@ -93,7 +93,7 @@ async function sendPassword(message: Message, password: string): Promise<unknown
     components: [infoEmbed("🔑 Üretilen Şifre", `\`\`\`${password}\`\`\``, {
       footer: "Bu mesajı gördükten sonra silebilirsin.",
     })] });
-    return message.reply({ flags: MessageFlags.IsComponentsV2,
+    return await message.reply({ flags: MessageFlags.IsComponentsV2,
     components: [infoEmbed("🔑 Şifre Üretildi", "Şifreni DM olarak gönderdim, kontrol et.")] }).catch(() => null);
   } catch {
     const sent = await message.reply({

@@ -68,7 +68,7 @@ const command: Command = {
     const attachment = message.attachments.first();
 
     if (!question && !attachment) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2,
+      return await message.reply({ flags: MessageFlags.IsComponentsV2,
       components: [usageEmbed(
         `${EMOJIS.usage} Kullanım: \`${prefix}sor <soru>\`\n` +
         `Örnek: \`${prefix}sor Türkiye'nin başkenti neresidir?\`\n` +
@@ -77,7 +77,7 @@ const command: Command = {
     }
 
     if (question.length > MAX_INPUT_CHARS) {
-      return message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Soru çok uzun (maks ${MAX_INPUT_CHARS} karakter).` })] });
+      return await message.reply({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Soru çok uzun (maks ${MAX_INPUT_CHARS} karakter).` })] });
     }
 
     const loadingMsg = await message.reply({ flags: MessageFlags.IsComponentsV2, components: textCard(`${EMOJIS.loading} AI düşünüyor...`) });
@@ -98,7 +98,7 @@ const command: Command = {
         }
 
         if (!fileContent) {
-          return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dosya okunamadı. Desteklenen metin tabanlı bir dosya (maks ${Math.round(
+          return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Dosya okunamadı. Desteklenen metin tabanlı bir dosya (maks ${Math.round(
               MAX_FILE_BYTES / 1024,
             )} KB) eklediğinden emin ol.` })] });
         }
@@ -115,7 +115,7 @@ const command: Command = {
       const trimmed = answer.trim().slice(0, 4000);
 
       if (!trimmed) {
-        return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} AI bir cevap üretemedi, tekrar dene.` })] });
+        return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} AI bir cevap üretemedi, tekrar dene.` })] });
       }
 
       // ✅ AI başarılı sonuç üretti → deneme hakkını şimdi harca.
@@ -128,11 +128,11 @@ const command: Command = {
         .setFooter({ text: `Soran: ${message.author.tag}` })
         .setTimestamp();
 
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2,
       components: [embed] });
     } catch (err: unknown) {
       console.error("sor patladı la:", err);
-      return loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
+      return await loadingMsg.edit({ flags: MessageFlags.IsComponentsV2, components: [errorCard({ description: `${EMOJIS.error} Hata oluştu: ${err instanceof Error ? err.message : String(err)}` })] });
     }
   },
 };

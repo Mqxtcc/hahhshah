@@ -44,13 +44,13 @@ const command: Command = {
   async execute(message: Message, args: string[]) {
     const soru = args.join(" ");
     if (!soru) {
-      return message.reply({
+      return await message.reply({
         flags: MessageFlags.IsComponentsV2,
         components: [errorEmbed("Hatalı Kullanım", `Kullanım: \`${command.usage}\``)],
       });
     }
     const yanit = YANITLAR[Math.floor(Math.random() * YANITLAR.length)];
-    return message.reply({
+    return await message.reply({
       flags: MessageFlags.IsComponentsV2,
       components: [
         infoEmbed("🎱 Sihirli 8-Top", `**Soru:** ${soru}\n\n**Cevap:** ${yanit}`),
