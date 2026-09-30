@@ -36,3 +36,4 @@ export async function deploySlashCommands(
     console.error("slash komutlar kaydolmadı la:", err instanceof Error ? err.message : String(err));
   }
 }
+// PR dummy commit for submission
